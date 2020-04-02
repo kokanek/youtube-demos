@@ -32,7 +32,7 @@ function App() {
       <header className="App-header">
         <div className="main">
           <div id="topDiv" className="topContainer">
-            <Title level={4} style={{color: '#3db5b0'}}>{txt.joinCommunity}</Title>
+            <Title level={4} style={{ color: '#3db5b0' }}>{txt.joinCommunity}</Title>
             <Text style={{ color: '#c5d674', fontSize: '18px', fontWeight: 'bold' }}>{txt.dayGuarrantee}</Text>
             <Text style={{ color: '#b2b6c1', fontSize: '18px', marginTop: '8px' }}>{txt.gainAccess}</Text>
             <Text style={{ color: '#b2b6c1', fontSize: '18px' }}>{txt.perfect}</Text>
@@ -40,9 +40,9 @@ function App() {
           <div id="bottomDiv" className="bottomContainer">
             <div id='bottom-left-div' className="bottomLeft">
               <Text className="heading">{txt.monthlySub}</Text>
-              <div style={{display: 'flex', alignItems: 'center'}}>
-                <Title level={2} style={{margin: '16px 0'}}>{txt.dollar}</Title>
-                <Text style={{color: '#ffffff77', fontSize: '16px', marginLeft: '8px'}}>{txt.perMonth}</Text>
+              <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'flex-start' }}>
+                <Title level={2} style={{ margin: '16px 0' }}>{txt.dollar}</Title>
+                <Text style={{ color: '#ffffff77', fontSize: '16px', marginLeft: '8px' }}>{txt.perMonth}</Text>
               </div>
               <Text style={{ color: '#efefefdd', fontSize: '16px' }}>{txt.fullAccess}</Text>
               <button className="button">{txt.signUp}</button>
@@ -56,9 +56,6 @@ function App() {
       </header>
     </div>
   );
-}
-
-const styles = {
 }
 
 export default App;
