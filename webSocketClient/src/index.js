@@ -14,6 +14,7 @@ server that a new user has joined to edit the document. */
     messages: []
   }
 
+  // not used yet
   logInUser = () => {
     const username = this.username.value;
     if (username.trim()) {
