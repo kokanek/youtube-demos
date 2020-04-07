@@ -8,7 +8,7 @@ const { Text } = Typography;
 const { Meta } = Card;
 const { Search } = Input;
 
-const client = new W3CWebSocket('ws://127.0.0.1:8000');
+const client = new W3CWebSocket('ws://192.168.0.106:8000');
 
 class App extends Component {
   /* When a user joins, I notify the
@@ -85,15 +85,17 @@ server that a new user has joined to edit the document. */
           <div className="title">
               <Text type="secondary" className={{ fontSize: '36px' }}>Websocket Chat</Text>
           </div>
-          <Card style={{ width: 300, margin: '16px 0 0 4px' }} loading={false}>
-            <Meta
-              avatar={
-                <Avatar style={{ color: '#f56a00', backgroundColor: '#fde3cf' }}>S</Avatar>
-              }
-              title="Suraj"
-              description="Hey buddies! party tonight?"
-            />
-          </Card>
+          {this.state.messages.map(message =>
+            <Card style={{ width: 300, margin: '16px 0 0 4px' }} loading={false}>
+              <Meta
+                avatar={
+                  <Avatar style={{ color: '#f56a00', backgroundColor: '#fde3cf' }}>S</Avatar>
+                }
+                title={message.user}
+                description={message.msg}
+              />
+            </Card>
+          )}
           <div className="bottom">
             <Search
               placeholder="input message and send"
