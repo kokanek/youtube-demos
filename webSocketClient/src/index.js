@@ -1,7 +1,12 @@
 import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
 import { w3cwebsocket as W3CWebSocket } from "websocket";
-const contentDefaultMessage = 'DEFAULT_MESSAGE';
+import { Card, Avatar, Input, Typography } from 'antd';
+import 'antd/dist/antd.css';
+import './index.css'
+const { Text } = Typography;
+const { Meta } = Card;
+const { Search } = Input;
 
 const client = new W3CWebSocket('ws://127.0.0.1:8000');
 
@@ -11,7 +16,9 @@ server that a new user has joined to edit the document. */
 
   state ={
     inputValue: '',
-    messages: []
+    messages: [],
+    isLoggedIn: false,
+    userName: ''
   }
 
   // not used yet
@@ -46,10 +53,11 @@ server that a new user has joined to edit the document. */
     this.setState({ inputValue: e.target.value})
   };
 
-  onButtonClicked = () => {
+  onButtonClicked = (value) => {
     client.send(JSON.stringify({
       type: "message",
-      msg: this.state.inputValue
+      msg: value,
+      user: this.state.userName
     }));
   }
 
@@ -63,7 +71,7 @@ server that a new user has joined to edit the document. */
       if (dataFromServer.type === "userevent") {
         //stateToChange.currentUsers = Object.values(dataFromServer.data.users);
       } else if (dataFromServer.type === "message") {
-        this.setState((state) => ({ messages: [...state.messages, dataFromServer.msg] }));
+        this.setState((state) => ({ messages: [...state.messages, { msg: dataFromServer.msg, user: dataFromServer.user}] }));
       }
     };
   }
@@ -71,13 +79,39 @@ server that a new user has joined to edit the document. */
   render() {
     console.log('messages: ', this.state.messages);
     return (
-      <div>
-        Practical Intro To WebSockets.
-        <input type="text" onChange={this.onInputChange} value={this.inputValue}/>
-        <button onClick={this.onButtonClicked}>Send message</button>
-        <ul>
-          {this.state.messages.map(msg => <li key={msg}>{msg}</li>)}
-        </ul>
+      <div className="main">
+        {this.state.isLoggedIn ? 
+        <>
+          <div className="title">
+              <Text type="secondary" className={{ fontSize: '36px' }}>Websocket Chat</Text>
+          </div>
+          <Card style={{ width: 300, margin: '16px 0 0 4px' }} loading={false}>
+            <Meta
+              avatar={
+                <Avatar style={{ color: '#f56a00', backgroundColor: '#fde3cf' }}>S</Avatar>
+              }
+              title="Suraj"
+              description="Hey buddies! party tonight?"
+            />
+          </Card>
+          <div className="bottom">
+            <Search
+              placeholder="input message and send"
+              enterButton="Send"
+              size="large"
+              onSearch={value => this.onButtonClicked(value)}
+            />
+          </div> 
+        </>
+        :
+        <div style={{marginTop: 100, padding: 40}}>
+          <Search
+            placeholder="Enter Username"
+            enterButton="Login"
+            size="large"
+            onSearch={value => this.setState({isLoggedIn: true, userName: value})}
+          />
+        </div>}
       </div>
     );
   }
